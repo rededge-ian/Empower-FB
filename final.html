@@ -1,0 +1,87 @@
+<html>
+<head>
+    <title>List Your Friends</title>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>
+		// Facebook functions to run once loaded
+		window.fbAsyncInit = function() {
+			FB.init({
+				appId      : '208407242644036', // App ID
+    			channelUrl : '//c9.io/rededge-ian/empoweractiondemo/workspace/channel.html', // Channel File
+				status     : true,
+				cookie     : true,
+				xfbml      : true
+			});
+
+			FB.Event.subscribe('auth.authResponseChange', function(response) {
+				if (response.status === 'connected') {
+					getStuff();
+				} else if (response.status === 'not_authorized') {
+					FB.login();
+				} else {
+					FB.login();
+				}
+			});
+		};
+
+		// Load the Facebook SDK
+		(function(d){
+			var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+			if (d.getElementById(id)) {return;}
+			js = d.createElement('script'); js.id = id; js.async = true;
+			js.src = "//connect.facebook.net/en_US/all.js";
+			ref.parentNode.insertBefore(js, ref);
+		}(document));
+
+		// Function is called by Facebook when you log in
+		function getStuff() {
+	
+			// Requests the user's friends from Facebook
+			FB.api('/me/friends', function(response) {
+	
+				// Saves the response into a variable named 'r'
+				r = response.data;
+
+				// Create a UL element for friends to go inside
+				var friends_ul = document.createElement("ul");
+
+				// Loops through all of the friends returned by Facebook
+				for(x=0;x<r.length;x++) {
+					// Creates the LI element which will be used within the list
+					var li = document.createElement("li");
+
+					// Creates an image element to be used
+					var img = document.createElement("img");
+
+					// Creates a text snippet based off of each user's name
+					var txt = document.createTextNode(r[x].name);
+
+					// Sets the image's src to the user's profile pic
+					img.setAttribute("src","//graph.facebook.com/"+r[x].id+"/picture");
+
+					// Adds the image element to the LI element
+					li.appendChild(img);
+
+					// Adds the text snippet to the LI element
+					li.appendChild(txt);
+
+					// Adds the LI element to the unordered list we selected earlier.
+					friends_ul.appendChild(li);
+				} // End of the loop
+
+				// Add that UL element to the Friends <div>
+				document.getElementById("friends").appendChild(friends_ul);
+	
+			});
+	
+		}
+	</script>
+	<h1>A List Of Your Friends</h1>
+	<fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button>
+	<div id="friends">
+	
+	</div>
+</body>
+</html>
