@@ -37,7 +37,17 @@
 
 		// Function is called by Facebook when you log in
 		function getStuff() {
-	
+
+            // Requests the user's friends from Facebook
+            FB.api('/me', function(response) {
+
+                // Saves the response into a variable named 'r'
+                r = response.data;
+
+                document.getElementById("myName").innerHTML(r.name);
+
+            });
+
 			// Requests the user's friends from Facebook
 			FB.api('/me/friends', function(response) {
 	
@@ -72,15 +82,15 @@
 				} // End of the loop
 
 				// Add that UL element to the Friends <div>
-				document.getElementById("friends").appendChild(friends_ul);
+				document.getElementById("myFriends").appendChild(friends_ul);
 	
 			});
 	
 		}
 	</script>
-	<h1>A List Of Your Friends</h1>
+	<h1>A List Of <span id="myName">Your</span> Friends</h1>
 	<fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button>
-	<div id="friends">
+	<div id="myFriends">
 	
 	</div>
 </body>
