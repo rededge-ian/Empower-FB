@@ -38,13 +38,10 @@
 		// Function is called by Facebook when you log in
 		function getStuff() {
 
-            // Requests the user's friends from Facebook
+            // Requests the user's profile info from Facebook
             FB.api('/me', function(response) {
-
-                // Saves the response into a variable named 'r'
-                r = response.data;
-
-                document.getElementById("myName").innerHTML(r.name);
+                console.log(response.name);
+                document.getElementById("myName").innerHTML = response.name + "'s";
 
             });
 
@@ -58,7 +55,7 @@
 				var friends_ul = document.createElement("ul");
 
 				// Loops through all of the friends returned by Facebook
-				for(x=0;x<r.length;x++) {
+				for(var x=0;x<r.length;x++) {
 					// Creates the LI element which will be used within the list
 					var li = document.createElement("li");
 
