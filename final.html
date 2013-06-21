@@ -51,44 +51,39 @@
 				// Saves the response into a variable named 'r'
 				r = response.data;
 
-				// Create a UL element for friends to go inside
-				var friends_ul = document.createElement("ul");
+                // To output
+                var outputList = '';
 
 				// Loops through all of the friends returned by Facebook
 				for(var x=0;x<r.length;x++) {
-					// Creates the LI element which will be used within the list
-					var li = document.createElement("li");
-
-					// Creates an image element to be used
-					var img = document.createElement("img");
-
-					// Creates a text snippet based off of each user's name
-					var txt = document.createTextNode(r[x].name);
-
-					// Sets the image's src to the user's profile pic
-					img.setAttribute("src","//graph.facebook.com/"+r[x].id+"/picture");
-
-					// Adds the image element to the LI element
-					li.appendChild(img);
-
-					// Adds the text snippet to the LI element
-					li.appendChild(txt);
-
-					// Adds the LI element to the unordered list we selected earlier.
-					friends_ul.appendChild(li);
+                    
+                    // starting <li>
+                    outputList += '<li>';
+                    
+                    // add IMG tag pointing to profile pic <img src="URL">
+                    outputList += '<img src="' + '//graph.facebook.com/' + r[x].id + '/picture"> ';
+                    
+                    // add name
+                    outputList += r[x].name;
+                    
+                    // close the <li> tag </li>
+                    outputList += '</li>';
 				} // End of the loop
 
-				// Add that UL element to the Friends <div>
-				document.getElementById("myFriends").appendChild(friends_ul);
+				// Add all of the <li>'s to the myFriends <ul>
+				document.getElementById("myFriends").innerHTML = outputList;
 	
 			});
 	
 		}
 	</script>
+    
 	<h1>A List Of <span id="myName">Your</span> Friends</h1>
+    
 	<fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button>
-	<div id="myFriends">
+    
+	<ul id="myFriends">
 	
-	</div>
+	</ul>
 </body>
 </html>
