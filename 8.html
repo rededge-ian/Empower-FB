@@ -6,77 +6,89 @@
 <body>
     <div id="fb-root"></div>
     <script>
-        // Facebook functions to run once loaded
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId      : '208407242644036', // App ID
-                channelUrl : '//c9.io/rededge-ian/empoweractiondemo/workspace/channel.html', // Channel File
-                status     : true,
-                cookie     : true,
-                xfbml      : true
-            });
+    	// Facebook functions to run once loaded
+		window.fbAsyncInit = function() {
+			FB.init({
+				appId      : '208407242644036', // App ID
+    			channelUrl : '//c9.io/rededge-ian/empoweractiondemo/workspace/channel.html', // Channel File
+				status     : true,
+				cookie     : true,
+				xfbml      : true
+			});
 
-            FB.Event.subscribe('auth.authResponseChange', function(response) {
-                if (response.status === 'connected') {
-                    getStuff();
-                } else if (response.status === 'not_authorized') {
-                    FB.login();
-                } else {
-                    FB.login();
-                }
-            });
-        };
+			FB.Event.subscribe('auth.authResponseChange', function(response) {
+				if (response.status === 'connected') {
+					getStuff();
+				} else if (response.status === 'not_authorized') {
+					FB.login();
+				} else {
+					FB.login();
+				}
+			});
+		};
 
-        // Load the Facebook SDK
-        (function(d){
-            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement('script'); js.id = id; js.async = true;
-            js.src = "//connect.facebook.net/en_US/all.js";
-            ref.parentNode.insertBefore(js, ref);
-        }(document));
+		// Load the Facebook SDK
+		(function(d){
+			var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+			if (d.getElementById(id)) {return;}
+			js = d.createElement('script'); js.id = id; js.async = true;
+			js.src = "//connect.facebook.net/en_US/all.js";
+			ref.parentNode.insertBefore(js, ref);
+		}(document));
 
-        // Function is called by Facebook when you log in
-        function getStuff() {
+		// Function is called by Facebook when you log in
+		function getStuff() {
 
             // Requests the user's profile info from Facebook
             FB.api('/me', function(response) {
-
+                
                 // Log the console response
                 console.log(response);
-
+                
                 // Update the name used in the myName <span>
                 document.getElementById("myName").innerHTML = response.name + "'s";
-
+                
                 // Update the name used in the myName <span>
                 document.getElementById("myEmail").innerHTML = " (" + response.email + ") ";
 
             }); // End of the FB API ME request handler
 
-            // Requests the user's friends from Facebook
-            FB.api('/me/friends', function(response) {
+			// Requests the user's friends from Facebook
+			FB.api('/me/friends', function(response) {
+	
+				// Saves the response into a variable named 'r'
+				r = response.data;
 
                 // To output
                 var outputList = '';
 
-                // Loops through all of the friends returned by Facebook
-                for(var x=0;x<response.data.length;x++) {
+				// Loops through all of the friends returned by Facebook
+				for(var x=0;x<r.length;x++) {
+                    
+                    // starting <li>
+                    outputList += '<li>';
+                    
+                    // add name
+                    outputList += r[x].name;
+                    
+                    // close the <li> tag </li>
+                    outputList += '</li>';
+                    
+				} // End of the loop
 
-                    // Log the response
-                    console.log(response.data[x]);
-
-                } // End of the loop
-
-            }); // End of the FB API friends request handler
-
-        }
-    </script>
-
+				// Add all of the <li>'s to the myFriends <ul>
+				document.getElementById("myFriends").innerHTML = outputList;
+	
+			}); // End of the FB API friends request handler
+	
+		}
+	</script>
+    
     <h1>Friend Lister</h1>
-
+    
     <fb:login-button show-faces="true" width="200" max-rows="1" scope="email"></fb:login-button>
-
-    <h2>A List Of <span id="myName">Your</span><span id="myEmail"></span> Friends:</h2>
+    
+	<h2>A List Of <span id="myName">Your</span><span id="myEmail"></span> Friends:</h2>
 
     <ul>
         <li>Sarah</li>
