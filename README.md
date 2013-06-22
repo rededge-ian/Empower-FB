@@ -7,10 +7,10 @@ Empower Simple Facebook JS SDK Demo
 
 [Facebook API Explorer](https://developers.facebook.com/tools/explorer/)
 
-[User data points which can be pulled from FB](https://developers.facebook.com/docs/reference/api/user/)
+[User data points which can be pulled from FB](https://developers.facebook.com/docs/reference/api/user/)  
 (Note that extra permissions are required for most data points)
 
-[Facebook Login button reference](https://developers.facebook.com/docs/reference/plugins/login/)
+[Facebook Login button reference](https://developers.facebook.com/docs/reference/plugins/login/)  
 (Change the scope attribute to get permission to retrieve more info)
 
 [List of permissions to use in the scope attribute](https://developers.facebook.com/docs/reference/login/#permissions)
