@@ -15,16 +15,6 @@
 				cookie     : true,
 				xfbml      : true
 			});
-
-			FB.Event.subscribe('auth.authResponseChange', function(response) {
-				if (response.status === 'connected') {
-                    // Do stuff now that they're logged in 
-				} else if (response.status === 'not_authorized') { // They did not authorize the app, prompt them again
-					FB.login();
-				} else { // No response (or other response), prompt again
-					FB.login();
-				}
-			});
 		};
 
     	// Load the Facebook SDK
@@ -40,14 +30,12 @@
     <h1>Friend Lister</h1>
 
     <h2>A List Of Your Friends:</h2>
-    
-    <div id="friends">
-        <ul>
-            <li>Sarah</li>
-            <li>Raj</li>
-            <li>Bob</li>
-        </ul>
-    </div>
+
+    <ul>
+        <li>Sarah</li>
+        <li>Raj</li>
+        <li>Bob</li>
+    </ul>
     
 </body>
 </html>

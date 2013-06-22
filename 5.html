@@ -15,7 +15,7 @@
                 cookie     : true,
                 xfbml      : true
             });
-    
+
             FB.Event.subscribe('auth.authResponseChange', function(response) {
                 if (response.status === 'connected') {
                     // Do stuff now that they're logged in
@@ -29,13 +29,13 @@
         };
 
         // Load the Facebook SDK
-		(function(d){
-			var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-			if (d.getElementById(id)) {return;}
-			js = d.createElement('script'); js.id = id; js.async = true;
-			js.src = "//connect.facebook.net/en_US/all.js";
-			ref.parentNode.insertBefore(js, ref);
-		}(document));
+        (function(d){
+            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement('script'); js.id = id; js.async = true;
+            js.src = "//connect.facebook.net/en_US/all.js";
+            ref.parentNode.insertBefore(js, ref);
+        }(document));
 
         // Function is called by Facebook when you log in
         function getStuff() {
@@ -49,15 +49,18 @@
                 // Update the name used in the myName <span>
                 document.getElementById("myName").innerHTML = response.name + "'s";
 
-            }); // End of the FB API /me request handler
+                // Update the name used in the myName <span>
+                document.getElementById("myEmail").innerHTML = " (" + response.email + ") ";
+
+            }); // End of the FB API ME request handler
         }
     </script>
-    
-    <h1>Friend Lister</h1>
-    
-    <fb:login-button show-faces="true" width="200" max-rows="1" scope=""></fb:login-button>
 
-    <h2>A List Of <span id="myName">Your</span> Friends:</h2>
+    <h1>Friend Lister</h1>
+
+    <fb:login-button show-faces="true" width="200" max-rows="1" scope="email"></fb:login-button>
+
+    <h2>A List Of <span id="myName">Your</span><span id="myEmail"></span> Friends:</h2>
 
     <ul>
         <li>Sarah</li>
