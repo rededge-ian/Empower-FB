@@ -40,10 +40,17 @@
 
             // Requests the user's profile info from Facebook
             FB.api('/me', function(response) {
-                console.log(response.name);
+                
+                // Log the console response
+                console.log(response);
+                
+                // Update the name used in the myName <span>
                 document.getElementById("myName").innerHTML = response.name + "'s";
+                
+                // Update the name used in the myName <span>
+                document.getElementById("myEmail").innerHTML = " (" + response.email + ") ";
 
-            });
+            }); // End of the FB API ME request handler
 
 			// Requests the user's friends from Facebook
 			FB.api('/me/friends', function(response) {
@@ -57,6 +64,8 @@
 				// Loops through all of the friends returned by Facebook
 				for(var x=0;x<r.length;x++) {
                     
+                    console.log(r[x]);
+                    
                     // starting <li>
                     outputList += '<li>';
                     
@@ -68,19 +77,22 @@
                     
                     // close the <li> tag </li>
                     outputList += '</li>';
+                    
 				} // End of the loop
 
 				// Add all of the <li>'s to the myFriends <ul>
 				document.getElementById("myFriends").innerHTML = outputList;
 	
-			});
+			}); // End of the FB API friends request handler
 	
 		}
 	</script>
     
-	<h1>A List Of <span id="myName">Your</span> Friends</h1>
+    <h1>Friend Lister</h1>
     
-	<fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button>
+    <fb:login-button show-faces="true" width="200" max-rows="1" scope="email"></fb:login-button>
+    
+	<h2>A List Of <span id="myName">Your</span><span id="myEmail"></span> Friends:</h2>
     
 	<ul id="myFriends">
 	
