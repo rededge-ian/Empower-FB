@@ -64,8 +64,13 @@
 				// Loops through all of the friends returned by Facebook
 				for(var x=0;x<r.length;x++) {
                     
+                    console.log(r[x]);
+                    
                     // starting <li>
                     outputList += '<li>';
+                    
+                    // add IMG tag pointing to profile pic <img src="URL">
+                    outputList += '<img src="' + '//graph.facebook.com/' + r[x].id + '/picture"> ';
                     
                     // add name
                     outputList += r[x].name;
