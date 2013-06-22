@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List Your Friends</title>
+</head>
+<body>
+<div id="fb-root"></div>
+<script type="text/javascript" src="congressList.js"></script>
+<script>
+    // Facebook functions to run once loaded
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '582481488441817', // App ID
+            channelUrl : 'https://c9.io/rededge-ian/empower-fb/workspace/channel.html', // Channel File
+            status     : true,
+            cookie     : true,
+            xfbml      : true
+        });
+
+        FB.Event.subscribe('auth.authResponseChange', function(response) {
+            if (response.status === 'connected') {
+                // Do stuff now that they're logged in
+                getStuff();
+            } else if (response.status === 'not_authorized') { // They did not authorize the app, prompt them again
+                FB.login();
+            } else { // No response (or other response), prompt again
+                FB.login();
+            }
+        });
+
+    };
+
+    // Load the Facebook SDK
+    (function(d){
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+    }(document));
+
+    function getStuff() {
+        FB.api('/me', function(response) {
+            console.log(response);
+            document.getElementById("myName").innerHTML = response.name + "'s";
+
+            document.getElementById('myEmail').innerHTML = ' (' + response.email + ')';
+        });
+
+        FB.api('/me/likes', function(response) {
+            console.log(response);
+            for(var x=0;x<response.data.length;x++) {
+                if(inArray(response.data[x].id,listOfPages) {
+                    alert(response.data[x].name);
+                }
+            }
+        });
+
+        FB.api('/me/friends', function(response) {
+
+            var outputList = '';
+
+            for(var x=0;x<response.data.length;x++) {
+                outputList = outputList + '<li>';
+
+                outputList = outputList + '<img src="https://graph.facebook.com/' + response.data[x].id + '/picture" />';
+
+                outputList = outputList + response.data[x].name;
+
+                outputList = outputList + '</li>';
+            }
+
+            document.getElementById('myFriends').innerHTML = outputList;
+
+        });
+    }
+</script>
+
+<h1>Friend Lister</h1>
+
+<fb:login-button show-faces="true" width="200" max-rows="1" scope="email,user_likes,user_photos,user_checkins,user_events,user_groups,user_relationships,user_interests,user_photos,user_notes"></fb:login-button>
+
+<h2>A List Of <span id="myName">Your</span> <span id="myEmail"></span> Friends:</h2>
+
+<ul id="myFriends">
+    <li>Sarah</li>
+    <li>Raj</li>
+    <li>Bob</li>
+</ul>
+
+</body>
+</html>
